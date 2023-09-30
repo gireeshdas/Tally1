@@ -18621,3 +18621,123 @@ def create_purchase_voucher(request):
     return redirect('/list_purchase_voucher')
 
 #------- End of Purchase Vouchers----
+
+# -Daybook---(Gireesh Das)
+
+from django.shortcuts import render, redirect
+from .models import Companies, payment_voucher, payment_particulars, receipt_voucher, receipt_particulars, contra_voucher, contra_particulars
+
+def Daybook_page(request):
+    t_id = request.session.get('t_id', None)
+    
+    if t_id is None:
+        return redirect('/')
+    
+    try:
+        company = Companies.objects.filter(id=t_id)
+    except Companies.DoesNotExist:
+        return redirect('/') 
+    
+    # payment_voucher
+    vch = payment_voucher.objects.all()
+    particulars = payment_particulars.objects.all()
+
+    # receipt_voucher
+    receipts = receipt_voucher.objects.all()
+    receipts_particular = receipt_particulars.objects.all()
+
+    # contra_voucher
+    contra = contra_voucher.objects.all()
+    contra_particular = contra_particulars.objects.all()
+
+    return render(request, "daybook_page.html", {
+        "company": company,
+        "vch": vch,
+        "particulars": particulars,
+        "receipts": receipts,
+        "receipts_particular": receipts_particular,
+        "contra": contra,
+        "contra_particular": contra_particular
+    })
+
+
+from django.shortcuts import render, get_object_or_404
+from .models import payment_voucher,payment_particulars
+
+# daybook_edit payment voucher transactions
+def payment_daybook_edit(request,voucher_id):
+    voucher = get_object_or_404(payment_voucher, id=voucher_id)
+    voucher_name=payment_voucher.objects.filter(id=voucher_id)
+    account = payment_voucher.objects.values_list('account', flat=True).distinct()
+    particulars = payment_particulars.objects.all()
+    # account=payment_voucher.objects.all()
+    narrations=payment_voucher.objects.get(id=voucher_id)
+    p_amount=payment_voucher.objects.get(id=voucher_id)
+    p_date=payment_voucher.objects.get(id=voucher_id)
+    r_amount=payment_particulars.objects.all()
+    company=Companies.objects.all()
+
+
+    account=tally_ledger.objects.all()
+ 
+
+
+    return render(request,'payment_daybook_edit.html', {'voucher': voucher,
+                                                  'particulars': particulars,
+                                                    'voucher_name':voucher_name,
+                                                   'account':account,
+                                                    'narrations':narrations,
+                                                     'p_amount':p_amount,
+                                                      'p_date':p_date, "r_amount":r_amount ,
+                                                          "company":company    })                                                  
+                                                       
+# daybook_edit receipt voucher transactions
+def receipt_daybook_edit(request,voucher_id):
+    voucher = get_object_or_404(receipt_voucher, id=voucher_id)
+    voucher_name=receipt_voucher.objects.filter(id=voucher_id)
+    account = receipt_voucher.objects.values_list('account', flat=True).distinct()
+    particulars = receipt_particulars.objects.all()
+    account=tally_ledger.objects.all()
+    narrations=receipt_voucher.objects.get(id=voucher_id)
+    receipt_amount=receipt_voucher.objects.get(id=voucher_id)
+    p_date=receipt_voucher.objects.get(id=voucher_id)
+    p_amount=receipt_particulars.objects.all()
+    company=Companies.objects.all()
+ 
+
+
+    return render(request,'receipt_daybook_edit.html', {'voucher': voucher,
+                                                  'particulars': particulars,
+                                                    'voucher_name':voucher_name,
+                                                   'account':account,
+                                                    'narrations':narrations,
+                                                     'receipt_amount':receipt_amount,
+                                                      'p_date':p_date, "p_amount":p_amount ,
+                                                          "company":company    })   
+
+
+#    daybook edit page of contra voucher transactions
+
+def contra_daybook_edit(request,voucher_id):
+    voucher = get_object_or_404(contra_voucher, id=voucher_id)
+    voucher_name=contra_voucher.objects.filter(id=voucher_id)
+    account = contra_voucher.objects.values_list('account', flat=True).distinct()
+    particulars = contra_particulars.objects.all()
+    account=tally_ledger.objects.all()
+    narrations=contra_voucher.objects.get(id=voucher_id)
+    contra_amount=contra_voucher.objects.get(id=voucher_id)
+    c_date=contra_voucher.objects.get(id=voucher_id)
+    c_amount=contra_particulars.objects.all()
+    company=Companies.objects.all()
+ 
+
+
+    return render(request,'contra_daybook_edit.html', {'voucher': voucher,
+                                                  'particulars': particulars,
+                                                    'voucher_name':voucher_name,
+                                                   'account':account,
+                                                    'narrations':narrations,
+                                                     'contra_amount':contra_amount,
+                                                      'c_date':c_date, "c_amount":c_amount ,
+                                                          "company":company })  
+
