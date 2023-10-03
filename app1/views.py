@@ -18623,7 +18623,6 @@ def create_purchase_voucher(request):
 #------- End of Purchase Vouchers----
 
 # -Daybook---(Gireesh Das)
-
 from django.shortcuts import render, redirect
 from .models import Companies, payment_voucher, payment_particulars, receipt_voucher, receipt_particulars, contra_voucher, contra_particulars
 
@@ -18649,6 +18648,10 @@ def Daybook_page(request):
     # contra_voucher
     contra = contra_voucher.objects.all()
     contra_particular = contra_particulars.objects.all()
+    
+    # journal_voucher
+    journal=journal_voucher.objects.all()
+    journal_particular=journal_particulars.objects.all()
 
     return render(request, "daybook_page.html", {
         "company": company,
@@ -18657,7 +18660,9 @@ def Daybook_page(request):
         "receipts": receipts,
         "receipts_particular": receipts_particular,
         "contra": contra,
-        "contra_particular": contra_particular
+        "contra_particular": contra_particular,
+        "journal":journal,
+        "journal_particular":journal_particular,
     })
 
 
@@ -18689,7 +18694,29 @@ def payment_daybook_edit(request,voucher_id):
                                                     'narrations':narrations,
                                                      'p_amount':p_amount,
                                                       'p_date':p_date, "r_amount":r_amount ,
-                                                          "company":company    })                                                  
+                                                          "company":company    })   
+
+
+
+from django.shortcuts import render, get_object_or_404, redirect
+from .models import payment_voucher, payment_particulars
+
+def edit_payment_voucher(request, pk):
+    voucher_1 = get_object_or_404(payment_voucher, id=pk)
+    voucher_2 = get_object_or_404(payment_particulars, id=pk)
+
+    if request.method == 'POST':
+        voucher_1.particulars = request.POST.get("particulars")
+        voucher_1.date = request.POST.get("date")
+        voucher_1.narration = request.POST.get("narration")
+        voucher_1.save()
+        voucher_2.particular = request.POST.get("particular")
+        voucher_2.amount = request.POST.get("amount")
+        voucher_2.save()
+        return redirect('payment_daybook_edit')
+    return render(request, 'payment_daybook_edit.html', {'voucher_1': voucher_1, 'voucher_2': voucher_2})
+
+
                                                        
 # daybook_edit receipt voucher transactions
 def receipt_daybook_edit(request,voucher_id):
@@ -18714,6 +18741,21 @@ def receipt_daybook_edit(request,voucher_id):
                                                      'receipt_amount':receipt_amount,
                                                       'p_date':p_date, "p_amount":p_amount ,
                                                           "company":company    })   
+
+def edit_receipt_voucher(request, pk):
+    voucher_1 = get_object_or_404(receipt_voucher, id=pk)
+    voucher_2 = get_object_or_404(receipt_particulars, id=pk)
+
+    if request.method == 'POST':
+        voucher_1.particulars = request.POST.get("particulars")
+        voucher_1.date = request.POST.get("date")
+        voucher_1.narration = request.POST.get("narration")
+        voucher_1.save()
+        voucher_2.particular = request.POST.get("particular")
+        voucher_2.amount = request.POST.get("amount")
+        voucher_2.save()
+        return redirect('receipt_daybook_edit')
+    return render(request, 'receipt_daybook_edit.html', {'voucher_1': voucher_1, 'voucher_2': voucher_2})
 
 
 #    daybook edit page of contra voucher transactions
@@ -18740,4 +18782,24 @@ def contra_daybook_edit(request,voucher_id):
                                                      'contra_amount':contra_amount,
                                                       'c_date':c_date, "c_amount":c_amount ,
                                                           "company":company })  
+
+def edit_contra_voucher(request, pk):
+    voucher_1 = get_object_or_404(contra_voucher, id=pk)
+    voucher_2 = get_object_or_404(contra_particulars, id=pk)
+
+    if request.method == 'POST':
+        voucher_1.particulars = request.POST.get("particulars")
+        voucher_1.date = request.POST.get("date")
+        voucher_1.narration = request.POST.get("narration")
+        voucher_1.save()
+        voucher_2.particular = request.POST.get("particular")
+        voucher_2.amount = request.POST.get("amount")
+        voucher_2.save()
+        return redirect('contra_daybook_edit')
+    return render(request,'contra_daybook_edit.html', {'voucher_1': voucher_1, 'voucher_2': voucher_2})
+
+
+
+
+
 

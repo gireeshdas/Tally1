@@ -1195,6 +1195,22 @@
                         {% endif %}
                     </tr>
                     {% endfor %}
+                    {% for c in journal %}
+                    <tr class="table-row" onclick="toggleRowSelection(this); window.location.href=''" style="cursor: pointer;border: 1px solid #00000022;">
+                        <td>{{ c.date }}</td>
+                        <td>
+                            {% for journal_particular in c.journal_particulars_set.all %}
+                            {{ journal_particular.particular }}{% if not forloop.last %}<br>{% endif %}
+                            {% endfor %}
+                        </td>
+                        <td>{{ c.jname }}</td>
+                        <td>{{ c.jid }}</td>
+                        <td>{{ c.debit }}</td>
+                        <td>{{ c.credit }}</td>
+                    </tr>
+                    {% endfor %}
+                    
+                    
                 </tbody>
             </table>
             
