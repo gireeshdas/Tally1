@@ -18680,7 +18680,7 @@ def payment_daybook_edit(request,voucher_id):
     p_amount=payment_voucher.objects.get(id=voucher_id)
     p_date=payment_voucher.objects.get(id=voucher_id)
     r_amount=payment_particulars.objects.all()
-    company=Companies.objects.all()
+    company=Companies.objects.filter(id=voucher_id)
 
 
     account=tally_ledger.objects.all()
@@ -18797,6 +18797,18 @@ def edit_contra_voucher(request, pk):
         voucher_2.save()
         return redirect('contra_daybook_edit')
     return render(request,'contra_daybook_edit.html', {'voucher_1': voucher_1, 'voucher_2': voucher_2})
+
+
+def journal_voucher_editpage(request):
+    # journal=journal_voucher.objects.get(id=pk)
+    # journal_particular=journal_particulars.objects.get(id=pk)
+    # date=
+    # particular=
+    # voucher_amount=
+    # particular_maount=
+    # narration=
+    return render(request,"journal_edit_page.html")
+
 
 
 

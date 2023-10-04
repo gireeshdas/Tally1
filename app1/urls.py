@@ -961,6 +961,9 @@ urlpatterns = [
     path('daybook/edit/payment/<int:voucher_id>/', views.payment_daybook_edit, name='payment_daybook_edit'),
     path('daybook/edit/receipt/<int:voucher_id>/', views.receipt_daybook_edit, name='receipt_daybook_edit'),
     path('daybook/edit/contra/<int:voucher_id>/', views.contra_daybook_edit, name='contra_daybook_edit'),
+
+
+    # path("edit_payment_voucher/<int:id>",views.edit_payment_voucher,name="edit_payment_voucher"),
     
     path(r'^media/(?P<path>.*)$', serve,{'document_root': settings.MEDIA_ROOT}),
               

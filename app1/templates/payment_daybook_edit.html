@@ -223,7 +223,8 @@ Current Balance:
                     <span class="pull-right clickable" data-effect="fadeOut"><i class="fa fa-times" style="color: black;"></i></span></a>
                 </div>                      
             </div>
-            <form action="edit_payment_voucher" id="frmvouch" method="POST" >
+            <form action="" id="frmvouch" method="POST">
+
                 {% csrf_token %}
             <div class="table-responsive">
                 <table class="table table-bordered table-sm border-dark" style="background-color: rgb(245, 240, 230);color:rgb(0, 0, 0);">
@@ -257,7 +258,8 @@ Current Balance:
 
                             
                             <select id="payacc" name="acc" class="acc rows payacc m-0 p-0" style="width: 150px; border-radius: 5px;">
-                                <option class="opt" id="opt">&nbsp;&nbsp;Select Account</option>
+
+                                <option class="opt" id="opt" selected>&nbsp;&nbsp;{{voucher_name.account}}</option>
                                 {% for i in account %}
                                     <option class="opt" id="opt" name="opt" value="{{i.id}},{{i.name}},{{i.under}}">&nbsp;&nbsp;{{i.name}}</option>
                                 {% endfor %}
@@ -265,7 +267,7 @@ Current Balance:
                         </span>
                     <span class="input-group">
                     <label>&nbsp;&nbsp;Current Balance :&nbsp;&nbsp;</label>
-                    <label id ='curbalance'></label>
+                    <label id ='curbalance' name="amnt[]"></label>
                     
                    
                     </span>
@@ -301,14 +303,14 @@ Current Balance:
                                         {% endfor %}
                                     </select>
                                     <br>
-                                   
+                                    {% for a in r_amount %} 
                                         <label class = 'blnc1' style="color: #000;" >&nbsp;&nbsp;Cur Bal:&nbsp;&nbsp;</label>
                                         <label class = 'blnc1' id="blnc1" class="p-0 mt-0" style="color: #000;">
                                         </label>
-                                        {% for a in r_amount %}
+                                      
                                         <label id ='onacc1' class="onacc" name = 'onacc' style="color: #000; margin-left: 25px;">
                                             <input type="text" value="{{a.amount}}"></label>
-                                        {% endfor %}
+                                     {% endfor %}
                                 </td>
                                 <td colspan="2" class="text-right mt-0" style="border: none; ">
                                     <input type="number" class = 'txt amnt' id= 'amnt1' name = 'amnt[]' oninput='calculateTotal();' onchange='showTransaction();'>
@@ -401,10 +403,12 @@ Current Balance:
                                     <h4 class="font-weight-bold">Transaction Type</h4>
                                     
                                 </div>
+                               
                                 <div class="col-3">
                                     <h4 class="text-align-end font-weight-bold">Amount</h4>
-                                    <input type="hidden" id="partid">
+                                    <input type="hidden" id="partid" value="{{p_amount.amount}}">{{p_amount.amount}}
                                 </div>
+                              
                                 
                             </div>
                             <hr>
