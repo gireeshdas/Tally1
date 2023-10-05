@@ -18672,9 +18672,9 @@ from .models import payment_voucher,payment_particulars
 # daybook_edit payment voucher transactions
 def payment_daybook_edit(request,voucher_id):
     voucher = get_object_or_404(payment_voucher, id=voucher_id)
-    voucher_name=payment_voucher.objects.filter(id=voucher_id)
-    account = payment_voucher.objects.values_list('account', flat=True).distinct()
-    particulars = payment_particulars.objects.all()
+    voucher_name = payment_voucher.objects.filter(id=voucher_id)
+    # account = payment_voucher.objects.values_list('account', flat=True).distinct()
+    particulars = payment_particulars.objects.filter(id=voucher_id)
     # account=payment_voucher.objects.all()
     narrations=payment_voucher.objects.get(id=voucher_id)
     p_amount=payment_voucher.objects.get(id=voucher_id)
