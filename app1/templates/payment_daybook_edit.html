@@ -258,8 +258,9 @@ Current Balance:
 
                             
                             <select id="payacc" name="acc" class="acc rows payacc m-0 p-0" style="width: 150px; border-radius: 5px;">
-
-                                <!-- <option class="opt" id="opt" selected>&nbsp;&nbsp;{{particulars.particular}}</option> -->
+                                {% for p in particulars %}
+                                <option class="opt" id="opt" name="" value="" selected>&nbsp;&nbsp; {{p.particular }}</option>
+                                {% endfor %}
                                 {% for i in account %}
                                     <option class="opt" id="opt" name="opt" value="{{i.id}},{{i.name}},{{i.under}}">&nbsp;&nbsp;{{i.name}}</option>
                                 {% endfor %}
@@ -288,6 +289,7 @@ Current Balance:
                         <div>
                         <tr>
                             <th colspan="18" class="text-dark" style="border: none;" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Particulars</th>
+                            
                             <th colspan="2" class="text-right text-dark" style=" font: weight 8px;size: 15px; border: none;">Amount&nbsp;</th>
                         </tr></div>
 
@@ -295,29 +297,23 @@ Current Balance:
                              
                                 <td colspan="18" style="border: none;" class="mt-4">
 
-                                    <select id="payacc1" name="opt[]" class="rows acc payacc mb-2 p-0" style="width: 150px; border-radius: 5px;" onchange="changeCurbalance();">
+                                    <select id="payacc1" name="opt[]" class="rows acc payacc mb-2 p-0" style="width: 150px; border-radius: 5px;" onchange="changeCurbalance(this);">
+                                        <option class="opt" id="opt">&nbsp;&nbsp;{{ voucher_account.account }}</option>
                                         {% for i in account %}
-                                        <option class="opt" id="opt" data-ledger-id="{{ i.id }}">&nbsp;&nbsp;{{ i.name }}</option>
+                                            <option class="opt" id="opt" value="{{ i.id }}" data-balance="{{ i.balance }}">&nbsp;&nbsp;{{ i.name }}</option>
                                         {% endfor %}
                                     </select>
+
                                     
-                                        
-                                    
-                                    <br>
-                                    <!-- {% for a in r_amount %} 
-                                        <label class = 'blnc1' style="color: #000;" >&nbsp;&nbsp;Cur Bal:&nbsp;&nbsp;</label>
-                                        <label class = 'blnc1' id="blnc1" class="p-0 mt-0" style="color: #000;">
-                                        </label>
-                                      
-                                        <label id ='onacc1' class="onacc" name = 'onacc' style="color: #000; margin-left: 25px;">
-                                          <input type="text" value="{{a.amount}}"></label>  
-                                     {% endfor %} -->
-                                </td>
-                                <td colspan="2" class="text-right mt-0" style="border: none; ">
-                                    <input type="number" class = 'txt amnt' id= 'amnt1' name = 'amnt[]' oninput='calculateTotal();' onchange='showTransaction();'>
-                                    <button type="button" class="butn" id = 'butn1'  onclick="createRow()">
-                                        <i class="bi bi-plus-square-fill" style="font-size: 20px;"></i></button>
-                                </td>
+                                    <label class = 'blnc1' style="color: #000;" >&nbsp;&nbsp;Cur Bal:&nbsp;&nbsp;</label>
+                                    <label class = 'blnc1' id="blnc1" class="p-0 mt-0" style="color: #000;"></label>
+                                    <label id ='onacc1' class="onacc" name = 'onacc' style="color: #000; margin-left: 25px;"></label>
+                            </td>                                          
+                            <td colspan="2" class="text-right mt-0" style="border: none; ">
+                                <input type="number" class = 'txt amnt' id= 'amnt1' name = 'amnt[]' value="{{voucher_amount.amount}}" oninput='calculateTotal();' onchange='showTransaction();'>
+                                <button type="button" class="butn" id = 'butn1'  onclick="createRow()">
+                                    <i class="bi bi-plus-square-fill" style="font-size: 20px;"></i></button>
+                            </td>
                             </tr>
                             
                     </tbody>
@@ -704,7 +700,7 @@ function createRow(){
   
     id++;
     $(".part").append('<tr style="border: none;"><td colspan="18" style="border: none;" class="mt-4"><select id="payacc'+id+'"  name="opt[]" class=" rows acc payacc mb-2 p-0" style="width: 150px; border-radius: 5px;" onchange="changeCurbalance();" ><option class="opt" id = "opt" >&nbsp;&nbsp;Select Particular </option>{% for i in ledg_all %}<option class="opt" id = "opt" value="{{i.id}}" >&nbsp;&nbsp;{{i.name}}</option> {% endfor %}</select> <br><label class = "blnc1" style="color: #000;" >&nbsp;&nbsp;Cur Bal:&nbsp;&nbsp;</label><label class = "blnc1" id="blnc'+id+'" class="p-0 mt-0" style="color: #000;"></label><label id ="onacc'+id+'" class="onacc" name = "onacc" style="color: #000; margin-left: 25px;"></label></td><td colspan="2" class="text-right mt-0" style="border: none; "><input type="number" class = "txt amnt" id= "amnt'+id+'" name = "amnt[]" oninput="calculateTotal();" onchange="showTransaction();"><button type="button" class="butn" id = "butn'+id+'"  onclick="createRow()"><i class="bi bi-plus-square-fill" style="font-size: 20px;"></i></button></td></tr>');
-    
+    console.log("Button clicked");
 }
 
 /*---------------end of create new row-------------*/

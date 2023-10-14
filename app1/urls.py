@@ -958,7 +958,7 @@ urlpatterns = [
     #------- End of Purchase Vouchers----
 
     path("Daybook_page", views.Daybook_page, name="Daybook_page"),
-    path('daybook/edit/payment/<int:voucher_id>/', views.payment_daybook_edit, name='payment_daybook_edit'),
+   path('daybook/edit/payment/<int:voucher_id>/', views.payment_daybook_edit, name='payment_daybook_edit'),
     path('daybook/edit/receipt/<int:voucher_id>/', views.receipt_daybook_edit, name='receipt_daybook_edit'),
     path('daybook/edit/contra/<int:voucher_id>/', views.contra_daybook_edit, name='contra_daybook_edit'),
 

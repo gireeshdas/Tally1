@@ -18672,29 +18672,34 @@ from .models import payment_voucher,payment_particulars
 # daybook_edit payment voucher transactions
 def payment_daybook_edit(request,voucher_id):
     voucher = get_object_or_404(payment_voucher, id=voucher_id)
+
+
+    particulars = payment_particulars.objects.filter(pay_voucher=voucher)
+
+
+
     voucher_name = payment_voucher.objects.filter(id=voucher_id)
-    # account = payment_voucher.objects.values_list('account', flat=True).distinct()
-    particulars = payment_particulars.objects.filter(id=voucher_id)
-    # account=payment_voucher.objects.all()
-    narrations=payment_voucher.objects.get(id=voucher_id)
-    p_amount=payment_voucher.objects.get(id=voucher_id)
-    p_date=payment_voucher.objects.get(id=voucher_id)
-    r_amount=payment_particulars.objects.all()
-    company=Companies.objects.filter(id=voucher_id)
-
-
-    account=tally_ledger.objects.all()
+    voucher_account=payment_voucher.objects.get(id=voucher_id)
  
-
-
+    narrations=payment_voucher.objects.get(id=voucher_id)
+    p_date=payment_voucher.objects.get(id=voucher_id)
+    company=Companies.objects.filter(id=voucher_id)
+    account=tally_ledger.objects.all()
+    voucher_amount=payment_voucher.objects.get(id=voucher_id)
+ 
     return render(request,'payment_daybook_edit.html', {'voucher': voucher,
-                                                  'particulars': particulars,
                                                     'voucher_name':voucher_name,
                                                    'account':account,
                                                     'narrations':narrations,
-                                                     'p_amount':p_amount,
-                                                      'p_date':p_date, "r_amount":r_amount ,
-                                                          "company":company    })   
+                                                      'p_date':p_date, 
+                                                          "company":company ,
+                                                          "voucher_amount":voucher_amount,
+                                                          "voucher_account":voucher_account,
+                                                          "particulars":particulars
+                                                            
+                                                              })  
+
+
 
 
 
