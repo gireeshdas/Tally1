@@ -2,7 +2,79 @@
 {% block body %}
 {% load static %}
 
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    Payment voucher edit page of
+
+    {% for c in company%}
+    {{c.name}}
+    {% endfor %}
+<br>
+    Date :
+    <input type="text" value="{{p_date.date}}">
+    <br>
+    
+    {% for v in voucher_name %}
+    Voucher name:{{ v.voucher.voucher_name }}
+    {% endfor %}
+    <br>
+    {% for v in voucher_name %}
+    Voucher no:{{ v.pid }}
+    {% endfor %}
+
+
+<br>
+    Account:
+    <select name="acc" id="account_select">
+        {% for a in account %}
+            <option value="">{{ a.account }}</option>
+        {% endfor %}
+    </select>
+<br>
+Current Balance:
+{% for a in r_amount %}
+   {{a.amount}}
+{% endfor %}
+
+<br>
+    Particular:
+    <select name="idlbl" id="particular_select">
+        {% for p in particulars %}
+        <option value="">{{ p.particular }}</option>
+        {% endfor %}
+    </select>
+<br>
+    Narration : 
+    
+    <input name="" value="{{narrations.narration}}" type="text">
+    <br>
+    <br>
+    Amount :
+    <input type="text" value="{{p_amount.amount}}">
+    <br>
+
+    Total :
+    <input type="text" name="">
+
+<br>
+    <button type="submit">save</button>
+  
+</html> -->
+
+
+
+<!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.3/font/bootstrap-icons.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script> -->
+
 
 <style>
     
@@ -128,7 +200,6 @@
         border-radius: 10px;
         margin-top: 50px;
         margin-left: 30px;
-        z-index: 9999;
     }
     .btn{
         color: azure;
@@ -152,68 +223,73 @@
                     <span class="pull-right clickable" data-effect="fadeOut"><i class="fa fa-times" style="color: black;"></i></span></a>
                 </div>                      
             </div>
-            <form action="create_payment_voucher" id="frmvouch" method="POST" >
+            <form action="" id="frmvouch" method="POST">
+
                 {% csrf_token %}
             <div class="table-responsive">
                 <table class="table table-bordered table-sm border-dark" style="background-color: rgb(245, 240, 230);color:rgb(0, 0, 0);">
                   <tr  class="p-2">
                     <th colspan="18" style="border-bottom: solid 0.5px rgba(205, 196, 196, 0.2) ; border-right:none ;">
-                        <div>
-                            {% for v in voucher_name %}
-                          <label style="font-weight:600 ;text-transform:capitalize; font-size: 18px;background-color: rgb(17, 54, 86);" id = 'vouchtype'
-                            name = 'vouchtype' value = '{{name}}'>&nbsp;&nbsp;&nbsp;&nbsp;{{ v.voucher.voucher_name }}
-                            &nbsp;&nbsp;&nbsp;&nbsp;</label>
-                            {% endfor %}
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                            <input type="hidden" value="{{name}}" name="type">
-                            <label style="font-weight: 400; color: #000;">No.&nbsp;&nbsp;</label>&nbsp;&nbsp;
-                            {% for v in voucher_name %}
-                            <label style="font-weight: 400; color: #000;" name = 'idlbl'>{{ v.pid }}</label>
-                            <input type="hidden" value="{{v}}" name="idlbl" id = 'idlbl'>
-                           {% endfor %}
-                            <!-- <input type="number" id = 'idlbl' style=" color:#000;background-color: rgb(255, 229, 183);height: 20px;" name = 'idlbl'>
-                          
-                            <input type="hidden" value="" name="idlbl" id = 'idlbl'>
-                            <label name = 'idlbl'></label>
-                            -->
-                           
-    
-                          </div>
+                      <div>
+                        {% for v in voucher_name %}
+                      <label style="font-weight:600 ;text-transform:capitalize; font-size: 18px;background-color: rgb(17, 54, 86);" id = 'vouchtype'
+                        name = 'vouchtype' value = '{{name}}'>&nbsp;&nbsp;&nbsp;&nbsp;{{ v.voucher.voucher_name }}
+                        &nbsp;&nbsp;&nbsp;&nbsp;</label>
+                        {% endfor %}
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <input type="hidden" value="{{name}}" name="type">
+                        <label style="font-weight: 400; color: #000;">No.&nbsp;&nbsp;</label>&nbsp;&nbsp;
+                        {% for v in voucher_name %}
+                        <label style="font-weight: 400; color: #000;" name = 'idlbl'>{{ v.pid }}</label>
+                        <input type="hidden" value="{{v}}" name="idlbl" id = 'idlbl'>
+                       {% endfor %}
+                        <!-- <input type="number" id = 'idlbl' style=" color:#000;background-color: rgb(255, 229, 183);height: 20px;" name = 'idlbl'>
+                      
+                        <input type="hidden" value="" name="idlbl" id = 'idlbl'>
+                        <label name = 'idlbl'></label>
+                        -->
+                       
 
-                          <div  class= "account" style="color: #000;font-weight:500 ;text-transform:capitalize; font-size: 18px;">
-                            <span class = 'input-group'>
-                                <label>&nbsp;&nbsp;Account&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;</label>
-    
-                                
-                                <select id="payacc" name="acc" class="acc rows payacc m-0 p-0" style="width: 150px; border-radius: 5px;">
-                                    {% for p in particulars %}
-                                    <option class="opt" id="opt" name="" value="" selected>&nbsp;&nbsp; {{p.particular }}</option>
-                                    {% endfor %}
-                                    {% for i in account %}
-                                        <option class="opt" id="opt" name="opt" value="{{i.id}},{{i.name}},{{i.under}}">&nbsp;&nbsp;{{i.name}}</option>
-                                    {% endfor %}
-                                </select>
-                            </span>
-                        <span class="input-group">
-                        <label>&nbsp;&nbsp;Current Balance :&nbsp;&nbsp;</label>
-                        <label id ='curbalance' name="amnt[]"></label>     
+                      </div>
+
+                      <div  class= "account" style="color: #000;font-weight:500 ;text-transform:capitalize; font-size: 18px;">
+                        <span class = 'input-group'>
+                            <label>&nbsp;&nbsp;Account&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;</label>
+
+                            
+                            <select id="payacc" name="acc" class="acc rows payacc m-0 p-0" style="width: 150px; border-radius: 5px;">
+                                {% for p in particulars %}
+                                <option class="opt" id="opt" name="" value="" selected>&nbsp;&nbsp; {{p.particular }}</option>
+                                {% endfor %}
+                                {% for i in account %}
+                                    <option class="opt" id="opt" name="opt" value="{{i.id}},{{i.name}},{{i.under}}">&nbsp;&nbsp;{{i.name}}</option>
+                                {% endfor %}
+                            </select>
                         </span>
-                    </div>
+                    <span class="input-group">
+                    <label>&nbsp;&nbsp;Current Balance :&nbsp;&nbsp;</label>
+                    <label id ='curbalance' name="amnt[]"></label>
+                    
+                   
+                    </span>
+                </div>
                 
                 </th>
-                <th colspan="10" class="text-right mt-0" style="border-bottom: solid 0.5px rgba(255, 255, 255, .2);
-                        border-left:none ; color: #000;">                           
-                  
-                  <div ></div>
-                  <input type="text" name = 'date1' value="{{p_date.date}}">
-                  <!-- <div>{{p_date.date}}</div> -->
-            </th>
+                    <th colspan="10" class="text-right mt-0" style="border-bottom: solid 0.5px rgba(255, 255, 255, .2);
+                            border-left:none ; color: #000;">                           
+                      
+                      <div ></div>
+                      <input type="text" name = 'date1' value="{{p_date.date}}">
+                      <!-- <div>{{p_date.date}}</div> -->
+                </th>
+
                   </tr>
 
                     <tbody style="border-color: rgb(112, 111, 111); " class = 'part'>
                         <div>
                         <tr>
                             <th colspan="18" class="text-dark" style="border: none;" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Particulars</th>
+                            
                             <th colspan="2" class="text-right text-dark" style=" font: weight 8px;size: 15px; border: none;">Amount&nbsp;</th>
                         </tr></div>
 
@@ -221,35 +297,41 @@
                              
                                 <td colspan="18" style="border: none;" class="mt-4">
 
-                                        <select id="payacc1"  name="opt[]" class=" rows acc payacc mb-2 p-0" style="width: 150px; border-radius: 5px;"
-                                         onchange="changeCurbalance(this);" >
-                                         <option class="opt" id="opt">&nbsp;&nbsp;{{ voucher_account.account }}</option>
-                                            {% for i in account %}
+                                    <select id="payacc1" name="opt[]" class="rows acc payacc mb-2 p-0" style="width: 150px; border-radius: 5px;" onchange="changeCurbalance(this);">
+                                        <option class="opt" id="opt">&nbsp;&nbsp;{{ voucher_account.account }}</option>
+                                        {% for i in account %}
                                             <option class="opt" id="opt" value="{{ i.id }}" data-balance="{{ i.balance }}">&nbsp;&nbsp;{{ i.name }}</option>
                                         {% endfor %}
+                                    </select>
 
-                                        </select> <br>
-                                        <label class = 'blnc1' style="color: #000;" >&nbsp;&nbsp;Cur Bal:&nbsp;&nbsp;</label>
-                                        <label class = 'blnc1' id="blnc1" class="p-0 mt-0" style="color: #000;"></label>
-                                        <label id ='onacc1' class="onacc" name = 'onacc' style="color: #000; margin-left: 25px;"></label>
-                                </td>
-                                <td colspan="2" class="text-right mt-0" style="border: none; ">
-                                    <input type="number" class = 'txt amnt' id= 'amnt1' name = 'amnt[]' value="{{voucher_amount.amount}}" oninput='calculateTotal();' onchange='showTransaction();'>
-                                    <button type="button" class="butn" id = 'butn1'  onclick="createRow()">
-                                        <i class="bi bi-plus-square-fill" style="font-size: 20px;"></i></button>
-                                </td>
-                            </tr>                           
+                                    
+                                    <label class = 'blnc1' style="color: #000;" >&nbsp;&nbsp;Cur Bal:&nbsp;&nbsp;</label>
+                                    <label class = 'blnc1' id="blnc1" class="p-0 mt-0" style="color: #000;"></label>
+                                    <label id ='onacc1' class="onacc" name = 'onacc' style="color: #000; margin-left: 25px;"></label>
+                            </td>                                          
+                            <td colspan="2" class="text-right mt-0" style="border: none; ">
+                                <input type="number" class = 'txt amnt' id= 'amnt1' name = 'amnt[]' value="{{voucher_amount.amount}}" oninput='calculateTotal();' onchange='showTransaction();'>
+                                <button type="button" class="butn" id = 'butn1'  onclick="createRow()">
+                                    <i class="bi bi-plus-square-fill" style="font-size: 20px;"></i></button>
+                            </td>
+                            </tr>
+                            
                     </tbody>
-                    <tfoot >                
-                        <td colspan="18" style="border: none; width: 400px;"> <!-- Adjust the width as needed -->
-                            <label class="text-dark" style="color: #000;"><b>Narration :</b></label>
-                            <textarea name="narrate" style="height: 30px; width: 250px; background-color: rgb(255, 229, 183); color: #000;">{{ narrations.narration }}</textarea>
-                        </td>
-                        <td colspan="2" class="text-right" style="border: none; " >
-                            <label class="text-dark text-right" >Total : </label>
-                            <input type="number" class="txt " id = 'total' name="total" readonly style="width: 175px;">
-                        </td>
-                        </tfoot>                                     
+                    <tfoot >
+                  
+<td colspan="18" style="border: none; width: 400px;"> <!-- Adjust the width as needed -->
+    <label class="text-dark" style="color: #000;"><b>Narration :</b></label>
+    <textarea name="narrate" style="height: 30px; width: 250px; background-color: rgb(255, 229, 183); color: #000;">{{ narrations.narration }}</textarea>
+</td>
+
+
+
+                
+                      <td colspan="2" class="text-right" style="border: none; " >
+                        <label class="text-dark text-right" >Total : </label>
+                        <input type="number" class="txt " id = 'total' name="total" readonly style="width: 175px;">
+                    </td>
+                    </tfoot>
                 </table>
                 
               </div>
@@ -318,10 +400,12 @@
                                     <h4 class="font-weight-bold">Transaction Type</h4>
                                     
                                 </div>
+                               
                                 <div class="col-3">
-                                    <h4 class="text-align-end font-weight-bold">Amount</h4>
+                                    <h4 class="text-align-end">Amount</h4>
                                     <input type="hidden" id="partid">
                                 </div>
+                              
                                 
                             </div>
                             <hr>
@@ -554,17 +638,6 @@
 <script>
 
 
-
-/*----------------- create new row----&---change current balance while entering amount------*/
-function createRow(){
-    var id = $('.payacc').length;
-    $(".part").append('<tr style="border: none;"><td colspan="18" style="border: none;"  class="mt-4"><select id="payacc'+id+'" name="opt[]" class=" rows acc payacc mb-2 p-0" style="width: 150px; border-radius: 5px;" onchange="changeCurbalance(this);" > <option class="opt" id = "opt" >&nbsp;&nbsp;Select Particular </option>{% for i in ledg_all %}<option class="opt" id = "opt" value="{{i.id}}" >&nbsp;&nbsp;{{i.name}}</option> {% endfor %}</select> <br> <label class = "blnc1" style="color: #000;" >&nbsp;&nbsp;Cur Bal:&nbsp;&nbsp;</label> <label class = "blnc1" id="blnc'+id+'" class="p-0 mt-0" style="color: #000;"></label> <label id ="onacc'+id+'" class="onacc" name = "onacc" style="color: #000; margin-left: 25px;"></label></td> <td colspan="2" class="text-right mt-0" style="border: none; ">')
-                 
-    
-}
-
-/*---------------end of create new row-------------*/
-
 /*-----------------------set current balance-----------*/
 
 
@@ -593,24 +666,24 @@ function createRow(){
 
 
 
-function changeCurbalance(id){
+function changeCurbalance(){
 
-    const id1 = $(id).attr('id').slice(-1);
-    console.log(id1)
-    
+    const id1 = $(this).attr("id")
+    const parid =$('#payacc'+id1).val();
 
     $.ajax({
         url: '{% url "cur_balance" %}',
         data: {
-                'id': $(id).val(),
+                'id': parid
         },
         
         success: function (data) {
             
             if(data[0].current_blnc_type == 'Dr'){       
-                curData1 = '<input id ="pled'+id1+'" class= "txt" readonly value = '+ data[0].current_blnc +'> <input id ="pledt'+id1+'" class= "txt" readonly value = '+data[0].current_blnc_type+'>';}
+            curData1 = '<input id ="pled" class= "txt" readonly value = '+ data[0].current_blnc +'> <input id ="pledt" class= "txt" readonly value = '+data[0].current_blnc_type+'>';}
             else{
-                curData1 = '<input id ="pled'+id1+'" class= "txt" readonly value = '+ data[0].current_blnc +' style="color: red;"> <input id ="pledt'+id1+'" style="color: red;"  class= "txt" readonly value = '+data[0].current_blnc_type+'>';}
+            curData1 = '<input id ="pled" class= "txt" readonly value = '+ data[0].current_blnc +' style="color: red;"> <input id ="pledt" style="color: red;"  class= "txt" readonly value = '+data[0].current_blnc_type+'>';}
+            //console.log(curData);
             $("#blnc"+id1).html(curData1);
         }
         
@@ -621,20 +694,28 @@ function changeCurbalance(id){
 /*----------------------end of set current balance-----------*/
 
 
+/*----------------- create new row----&---change current balance while entering amount------*/
+var id = 1
+function createRow(){
+    var id = $('.payacc').length;
+    $(".part").append('<tr style="border: none;"><td colspan="18" style="border: none;"  class="mt-4"><select id="payacc'+id+'" name="opt[]" class=" rows acc payacc mb-2 p-0" style="width: 150px; border-radius: 5px;" onchange="changeCurbalance(this);" > <option class="opt" id = "opt" >&nbsp;&nbsp;Select Particular </option>{% for i in ledg_all %}<option class="opt" id = "opt" value="{{i.id}}" >&nbsp;&nbsp;{{i.name}}</option> {% endfor %}</select> <br> <label class = "blnc1" style="color: #000;" >&nbsp;&nbsp;Cur Bal:&nbsp;&nbsp;</label> <label class = "blnc1" id="blnc'+id+'" class="p-0 mt-0" style="color: #000;"></label> <label id ="onacc'+id+'" class="onacc" name = "onacc" style="color: #000; margin-left: 25px;"></label></td> <td colspan="2" class="text-right mt-0" style="border: none; ">')
+                    
+}
+
+/*---------------end of create new row-------------*/
 
 /*--------- Total----------*/
 
 function calculateTotal() {
     var sum = 0 ;
-    var count = $('.amnt').length;
-    console.log(count)
+    var count = $('.amnt').length
     
   for(var i = 1; i <= count; i++) {
     var value1 = document.getElementById("amnt" + i);
     if(isNaN(value1.value) == false){
         sum += parseInt(value1.value) ;
     }
-    console.log(value1);
+    //console.log(value1);
   }
   $('#total').val(sum);
   
@@ -643,9 +724,8 @@ function calculateTotal() {
 
 function setClosing() {
 
-    // console.log('Set Value')
-    id = $('.amnt').length;
-    console.log(id)
+    console.log('Set Value')
+
     const ac = ($('#payacc').val()).split(',')[0];
     const curblnc = $('#led').val();
     const curblnct = $('#ledt').val();
@@ -661,10 +741,10 @@ function setClosing() {
             },
             
             success: function (data) {
-                // console.log(data)
+                //console.log(data)
                 
                 $("#curbalance").html(data);
-                // console.log(data);
+                //console.log(cur_change);
             }
             
         });
@@ -672,9 +752,8 @@ function setClosing() {
     
               
     const pac = $('#payacc'+id).val();
-    const curblnc1 = $('#pled'+id).val();
-    const curblnct1 = $('#pledt'+id).val();
- 
+    const curblnc1 = $('#pled').val();
+    const curblnct1 = $('#pledt').val();
     
     $.ajax({
         url: '{% url "pcur_balance_change" %}',
@@ -687,14 +766,15 @@ function setClosing() {
         
         success: function (data) {
             
-            $("#blnc"+id).html(data);
+            $("#blnc"+(id-1)).html(data);
+            //console.log('#blnc'+id);
         }
     
     });
         
 
    
-    
+    id++;
   }
 
 
@@ -731,7 +811,7 @@ function showTransaction(){
             document.getElementById('onacc'+i).innerHTML = "On Account";
             document.getElementById('onacc'+i).style.display = "block";
             part = document.getElementById("payacc" + i).value;
-            //console.log(part)
+           
         }
        
     }
@@ -760,12 +840,9 @@ function showTransaction(){
    
     
 /*---------------------cheque range display--&---show cheque number automatically-------------------------*/
-    console.log($("#chacc").text())
     $.ajax({
         
         url: '{% url "cheque_range" %}',
-        type: 'POST',
-
         data: {
                 'account_name' : $("#chacc").text(),
                  csrfmiddlewaretoken: '{{ csrf_token }}'
@@ -778,7 +855,6 @@ function showTransaction(){
             else{
                 chrange = '&nbsp;&nbsp;&nbsp;&nbsp; Not Applicable'
             }
-            console.log(chrange)
             $('#chrange').html(chrange);
             if(data[0] != 0){
                 if(data[2] != 0){
@@ -811,8 +887,7 @@ function showTransaction(){
     const vouchtype = $('#vouchtype').text();
     
     if ($("#t_type").text() === 'Cheque'){
-        console.log("cheque");
-        console.log($("#chdate").val());
+
         $.ajax({
                     type : 'POST',
                     url:"{% url 'bank_transaction' %}",
@@ -826,16 +901,16 @@ function showTransaction(){
                         t_type : $("#t_type").text(),
                         instnum:$("#chnumber").val(),
                         instdate :$("#chdate").val(),
-                        efaccnum :0,
-                        efifs :0,
-                        efbank :0,
+                        efaccnum :$("#efaccnum").val(),
+                        efifs :$("#efifs").val(),
+                        efbank : $("#efbank").val(),
                         amount :$("#chamnt").text(),
                         csrfmiddlewaretoken: '{{ csrf_token }}'
                         
                     },
                     
                     success: function(response) {
-                        console.log(response.message)
+
                         if(response.message === 'success'){
                             $('#modalForm')[0].reset();
                         
@@ -846,8 +921,6 @@ function showTransaction(){
                 });
     }
     else if($("#t_type").text() === 'e-Fund Transfer'){
-        console.log("e-f");
-        console.log($("#efdate").val());
 
         $.ajax({
                     type : 'POST',
@@ -880,9 +953,6 @@ function showTransaction(){
     }
     else{   
         // console.log($("#partid").val());
-        console.log("others");
-        console.log($("#instdate").val());
-
         $.ajax({
                     type : 'POST',
                     url:"{% url 'bank_transaction' %}",
@@ -895,9 +965,9 @@ function showTransaction(){
                         t_type : $("#t_type").text(),
                         instnum:$("#instnum").val(),
                         instdate :$("#instdate").val(),
-                        efaccnum :0,
-                        efifs :0,
-                        efbank : 0,
+                        efaccnum :$("#efaccnum").val(),
+                        efifs :$("#efifs").val(),
+                        efbank : $("#efbank").val(),
                         amount :$("#amount").text(),
                         csrfmiddlewaretoken: '{{ csrf_token }}'
                         
@@ -922,3 +992,4 @@ function showTransaction(){
 </script>
 
 {% endblock %}
+
