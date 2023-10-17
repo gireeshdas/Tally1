@@ -18726,27 +18726,32 @@ def edit_payment_voucher(request, pk):
 # daybook_edit receipt voucher transactions
 def receipt_daybook_edit(request,voucher_id):
     voucher = get_object_or_404(receipt_voucher, id=voucher_id)
-    voucher_name=receipt_voucher.objects.filter(id=voucher_id)
-    account = receipt_voucher.objects.values_list('account', flat=True).distinct()
-    particulars = receipt_particulars.objects.all()
-    account=tally_ledger.objects.all()
-    narrations=receipt_voucher.objects.get(id=voucher_id)
-    receipt_amount=receipt_voucher.objects.get(id=voucher_id)
-    p_date=receipt_voucher.objects.get(id=voucher_id)
-    p_amount=receipt_particulars.objects.all()
-    company=Companies.objects.all()
+
+
+    particulars = receipt_particulars.objects.filter(rec_voucher=voucher)
+
+
+
+    voucher_name = receipt_voucher.objects.filter(id=voucher_id)
+    voucher_account=receipt_voucher.objects.get(id=voucher_id)
  
-
-
-    return render(request,'receipt_daybook_edit.html', {'voucher': voucher,
-                                                  'particulars': particulars,
+    narrations=receipt_voucher.objects.get(id=voucher_id)
+    p_date=receipt_voucher.objects.get(id=voucher_id)
+    company=Companies.objects.filter(id=voucher_id)
+    account=tally_ledger.objects.all()
+    voucher_amount=receipt_voucher.objects.get(id=voucher_id)
+ 
+    return render(request,'payment_daybook_edit.html', {'voucher': voucher,
                                                     'voucher_name':voucher_name,
                                                    'account':account,
                                                     'narrations':narrations,
-                                                     'receipt_amount':receipt_amount,
-                                                      'p_date':p_date, "p_amount":p_amount ,
-                                                          "company":company    })   
-
+                                                      'p_date':p_date, 
+                                                          "company":company ,
+                                                          "voucher_amount":voucher_amount,
+                                                          "voucher_account":voucher_account,
+                                                          "particulars":particulars
+                                                            
+                                                              })  
 def edit_receipt_voucher(request, pk):
     voucher_1 = get_object_or_404(receipt_voucher, id=pk)
     voucher_2 = get_object_or_404(receipt_particulars, id=pk)
